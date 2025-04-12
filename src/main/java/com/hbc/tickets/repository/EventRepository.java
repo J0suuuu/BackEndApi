@@ -3,6 +3,7 @@ package com.hbc.tickets.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.hbc.tickets.model.Event;
+import com.hbc.tickets.model.User;
 
 import java.util.Date;
 import java.util.List;
@@ -24,4 +25,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllByOrderByDateAsc();
 
 	List<Event> findAllByOrderBySoldTicketsDesc();
+
+	List<Event> findByCategoriesId(Long categoryId);
+	List<Event> findByOrganizer(User organizer);
+
+	
    }

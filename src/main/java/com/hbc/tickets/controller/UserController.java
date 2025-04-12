@@ -84,6 +84,8 @@ public class UserController {
         return ResponseEntity.ok("Correo electrónico actualizado correctamente.");
     }
     
+    
+    
     @GetMapping("/profile/me")
     public ResponseEntity<?> getProfileMe(@RequestHeader("Authorization") String token) {
         // Eliminar el prefijo "Bearer " del token

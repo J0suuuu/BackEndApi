@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Event {
@@ -33,13 +34,26 @@ public class Event {
     @Column(name = "localizacion")
     private String localizacion;
 
-    // Nuevo campo para la localización
+    @Column(name = "price")
+    private int price;
+
+    @Column(name = "event_url")  // Campo opcional para la URL
+    private String eventUrl;
+
     @ManyToOne
     @JoinColumn(name = "organizer_id")
-    @JsonIgnore  // Evita la serialización de la relación con User
+    @JsonIgnore
     private User organizer;
 
-    // Getters y setters existentes
+    @ManyToMany
+    @JoinTable(
+        name = "event_category",
+        joinColumns = @JoinColumn(name = "event_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;  // Relación con las categorías
+
+    // Getters y setters
 
     public Long getId() {
         return id;
@@ -111,5 +125,29 @@ public class Event {
 
     public void setOrganizer(User organizer) {
         this.organizer = organizer;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getEventUrl() {
+        return eventUrl;
+    }
+
+    public void setEventUrl(String eventUrl) {
+        this.eventUrl = eventUrl;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }

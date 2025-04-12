@@ -5,10 +5,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-
-
 
 @Service
 public class EmailService {
@@ -20,6 +19,11 @@ public class EmailService {
 
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("Email sender: " + senderEmail); // Verifica si la dirección de correo es correcta.
     }
 
     public void sendEmail(String recipient, String subject, String messageContent) throws MessagingException {

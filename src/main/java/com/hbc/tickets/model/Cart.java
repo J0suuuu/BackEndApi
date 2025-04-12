@@ -1,52 +1,55 @@
 package com.hbc.tickets.model;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-
 @Entity
 public class Cart {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @ManyToOne
     private User user;
 
-    @ManyToMany
-    private List<Event> events = new ArrayList<>();
+    // This is the correct list of CartItems
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> events = new ArrayList<>(); // This is where the cart items are stored
 
-	public Long getId() {
-		return id;
-	}
+    // Getter and Setter for events (cart items)
+    public List<CartItem> getEvents() {
+        return events;  // This returns the list of events or cart items
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setEvents(List<CartItem> events) {
+        this.events = events;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    // You can rename getEvents to getItems() if you prefer that name
+    public List<CartItem> getItems() {
+        return events;  // This returns the same list, just under a different method name
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setItems(List<CartItem> items) {
+        this.events = items;
+    }
 
-	public List<Event> getEvents() {
-		return events;
-	}
+    // Additional getters and setters for Cart ID and User
+    public Long getId() {
+        return id;
+    }
 
-	public void setEvents(List<Event> events) {
-		this.events = events;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    // Getters y setters
-    
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
-

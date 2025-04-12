@@ -1,6 +1,7 @@
 package com.hbc.tickets.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class EventDTO {
     private Long id;
@@ -11,9 +12,13 @@ public class EventDTO {
     private int availableTickets;
     private String imageUrl;
     private String localizacion;
-    private String organizerUsername;  // Solo el nombre de usuario del organizador
+    private int price;
+    private String organizerUsername;
+    private String eventUrl;
+    private List<CategoryDTO> categories;  // Lista de nombres de categorías
 
-    public EventDTO(Long id, String title, String description, Date date, int soldTickets, int availableTickets, String imageUrl, String localizacion, String organizerUsername) {
+    // Constructor actualizado
+    public EventDTO(Long id, String title, String description, Date date, int soldTickets, int availableTickets, String imageUrl, String localizacion, int price, String organizerUsername, String eventUrl, List<CategoryDTO> categories) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -22,11 +27,13 @@ public class EventDTO {
         this.availableTickets = availableTickets;
         this.imageUrl = imageUrl;
         this.localizacion = localizacion;
+        this.price = price;
         this.organizerUsername = organizerUsername;
+        this.eventUrl = eventUrl;
+        this.categories = categories;
     }
 
-    // Getters y Setters
-
+    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -91,11 +98,35 @@ public class EventDTO {
         this.localizacion = localizacion;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public String getOrganizerUsername() {
         return organizerUsername;
     }
 
     public void setOrganizerUsername(String organizerUsername) {
         this.organizerUsername = organizerUsername;
+    }
+
+    public String getEventUrl() {
+        return eventUrl;
+    }
+
+    public void setEventUrl(String eventUrl) {
+        this.eventUrl = eventUrl;
+    }
+
+    public List<CategoryDTO> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategoryDTO> categories) {
+        this.categories = categories;
     }
 }

@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/events/favorites")
@@ -75,7 +77,6 @@ public class FavoriteController {
     // Obtener los eventos favoritos del usuario
     @GetMapping("/list")
     public ResponseEntity<?> getFavorites(@RequestHeader("Authorization") String token) {
-        // Obtener el usuario autenticado usando el token
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();  // Obtiene el nombre de usuario desde el token
 
@@ -85,6 +86,12 @@ public class FavoriteController {
             return ResponseEntity.status(404).body("Usuario no encontrado.");
         }
 
-        return ResponseEntity.ok(user.getFavorites());  // Devolver los favoritos del usuario
+        // Devuelve solo los IDs de los eventos favoritos
+        List<Long> favoriteEventIds = user.getFavorites().stream()
+            .map(Event::getId)
+            .collect(Collectors.toList());
+
+        return ResponseEntity.ok(favoriteEventIds);  // Lista de IDs
     }
+
 }
